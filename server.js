@@ -3,7 +3,7 @@ let app = express();
 let bodyParser = require('body-parser');
 let mysql = require('mysql');
 var router = express.Router();
-var port =  process.env.port || 3000;
+const port =  process.env.port || 3000;
 const SqlString = require('mysql/lib/protocol/SqlString');
 const { CLIENT_MULTI_RESULTS } = require('mysql/lib/protocol/constants/client');
 

@@ -22,8 +22,8 @@ app.get('/',(req,res)=>{
 })
 let dbCon = mysql.createConnection({
     host : '192.168.1.192',
-    user : 'root',
-    password : 'P@ssw0rd!1',
+    user : 'user',
+    password : 'p12345678',
     database :'trackingbluetooth'
 
 })

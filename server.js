@@ -21,9 +21,9 @@ app.get('/',(req,res)=>{
 })
 })
 let dbCon = mysql.createConnection({
-    host : 'localhost',
+    host : '192.168.1.192',
     user : 'root',
-    password : 'a123123',
+    password : 'P@ssw0rd!1',
     database :'trackingbluetooth'
 
 })
@@ -39,7 +39,7 @@ app.get('/tracks',(req,res)=>{
         else{
             message = "Success!"
         }
-            return res.send({error : false,data :results,message : message});
+            return res.send(results);
         
     })
 }) 
@@ -58,7 +58,7 @@ app.get('/track/:id',(req,res)=>{
             else{
                 message = "Success!";
             }
-            return res.send({error : false , data : results[0],message : message})
+            return res.send(results[0])
         })
     }
 })
@@ -75,7 +75,7 @@ app.post('/track',(req,res)=>{
     let Work_for = req.body.Work_for;
     let Note = req.body.Note;
     console.log(Track_ID,Brand,Size,Location,Start_Enable_Date,Generation,Menufacurer,Age_of_use,Work_for,Note)
-    if(!Track_ID || !Brand || !Size || !Location ||!Working_Condition || !Start_Enable_Date || !Generation || !Menufacurer || !Age_of_use || !Work_for || !Note ){
+    if(!Track_ID || !Size || !Location ||!Working_Condition || !Start_Enable_Date || !Generation  || !Age_of_use || !Work_for  ){
         return res.status(400).send({error : true , message : "Please กรอกข้อมูลให้ครบ"})
     }else{
         dbCon.query('INSERT INTO track (Track_ID,Brand,Size,Location,Start_Enable_Date,Generation,Menufacurer,Age_of_use,Work_for,Note,Working_Condition) VALUES(?,?,?,?,?,?,?,?,?,?,?)',[Track_ID,Brand,Size,Location,Start_Enable_Date,Generation,Menufacurer,Age_of_use,Work_for,Note,Working_Condition],(error,results,fields)=>{
@@ -95,7 +95,7 @@ app.put('/track',(req,res)=>{
     let  End_Date = req.body.End_Date ;
     let Note  = req.body.Note ;
     console.log(Track_ID,Location,Working_Condition,Last_Improve_Date,Count_Improve,End_Date,Note)
-    if(!Track_ID || !Location || !Working_Condition || !Last_Improve_Date ||!Count_Improve || !End_Date ||  !Note  ){
+    if(!Track_ID || !Location || !Working_Condition  ||!Count_Improve   ){
         return res.status(400).send({error : true , message : "Please กรอกข้อมูลให้ครบ"})
     }else{
         dbCon.query("UPDATE track SET Location = ?,Working_Condition = ?,Last_Improve_Date = ?,Count_Improve = ?,End_Date = ?,Note = ? WHERE Track_ID = ? ",[Location,Working_Condition,Last_Improve_Date,Count_Improve,End_Date,Note,Track_ID],(error,results,fields)=>{
@@ -135,4 +135,14 @@ app.delete('/track',(req,res)=>{
 app.listen(port,()=>{
     console.log('Node App is running or port 3000');
 })
-module.exports =app;
+// module.exports =app;
+
+module.exports = function(app) {
+    app.use(
+      '/api',
+      createProxyMiddleware({
+        target: 'http://localhost:8000',
+        changeOrigin: true,
+      })
+    );
+  };

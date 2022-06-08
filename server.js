@@ -74,7 +74,7 @@ app.post('/track',(req,res)=>{
     let Age_of_use = req.body.Age_of_use;
     let Work_for = req.body.Work_for;
     let Note = req.body.Note;
-    let Count_Improve = req.body.Count_Improve;
+    let Count_Improve = req.body.Count_Improve ;
     console.log(Track_ID,Brand,Size,Location,Start_Enable_Date,Generation,Menufacurer,Age_of_use,Work_for,Note)
     if(!Track_ID || !Size || !Location ||!Working_Condition || !Start_Enable_Date || !Generation  || !Age_of_use || !Work_for|| !Count_Improve  ){
         return res.status(400).send({error : true , message : "Please กรอกข้อมูลให้ครบ"})
